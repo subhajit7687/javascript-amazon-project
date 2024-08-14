@@ -18,7 +18,7 @@ products.forEach(product => {
         </div>
 
         <div class="product-price">
-          $${(product.priceInCents / 100).toFixed(2)}
+          $${(product.priceCents / 100).toFixed(2)}
         </div>
 
         <div class="product-quantity-container">
@@ -50,3 +50,25 @@ products.forEach(product => {
 });
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.add-to-cart-button').forEach((button, index) => {
+    button.addEventListener('click', () => {
+        const productId = products[index].id;
+        let matchingItem;
+
+        cart.forEach(item => {
+            if (item.productId === productId)
+                matchingItem = item;
+        })
+
+        if (matchingItem)
+            matchingItem.quantity++;
+        else {
+            cart.push({
+                productId,
+                quantity: 1
+            });
+        }
+        console.log(cart);
+    });
+});
